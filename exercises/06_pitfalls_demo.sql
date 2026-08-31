@@ -1,0 +1,32 @@
+-- ============================================================================
+-- Exercise 06: JOIN Pitfalls, Demonstrated (Not Just Described)
+-- Goal: reproduce the two most common JOIN failures on purpose, on a small
+-- enough dataset that you can see exactly what happened, instead of just
+-- taking the course's word for it. See docs/common-pitfalls.md.
+-- ============================================================================
+
+-- Q1. CARTESIAN PRODUCT. There are 6 employees and 15 products in this
+--     dataset. Write a JOIN between employees and products with NO ON
+--     condition (or, in SQLite, a CROSS JOIN). Confirm the result has
+--     exactly 6 * 15 = 90 rows -- every employee matched to every product,
+--     which means nothing, but SQL will do it without complaint.
+
+-- Q2. THE "ON vs WHERE" TRAP. This dataset has exactly 2 customers with
+--     zero orders (customer_id 19 and 20 -- confirmed in Exercise 03, Q3).
+--     Write TWO queries that both LEFT JOIN customers to orders:
+--       (a) one that filters "orders placed in 2024" by putting the
+--           condition in the ON clause (alongside the join key)
+--       (b) one that filters the same condition by putting it in the
+--           WHERE clause instead
+--     Count the customers with zero matching rows in each version.
+--     Version (a) should still show all customers with no 2024 orders
+--     (including the 2 who have never ordered anything, AND any customer
+--     whose only orders were before 2024). Version (b) should show FEWER
+--     customers with zero rows than you'd expect, because filtering the
+--     right-hand table in WHERE silently discards the unmatched
+--     (NULL-filled) rows that LEFT JOIN was supposed to preserve --
+--     converting your LEFT JOIN into an INNER JOIN without changing the
+--     JOIN keyword at all.
+--
+--     Write both versions, run both, and in a comment state the row-count
+--     difference you observe and why it happens.

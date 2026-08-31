@@ -1,0 +1,35 @@
+-- ============================================================================
+-- Exercise 05: Query Hygiene & Common Mistakes
+-- Goal: write SQL other people (including future you) can trust at a
+-- glance. See docs/common-pitfalls.md for the full checklist this
+-- exercise is built from.
+-- ============================================================================
+
+-- Below is a real query someone on your team wrote and asked you to
+-- review before it goes into a scheduled report. It runs without error
+-- and returns "reasonable-looking" results. Your job: rewrite it applying
+-- every best practice from the course, and in a comment, list every
+-- problem you found in the original.
+--
+-- (Deliberately breaking multiple hygiene rules at once, on one line, with
+-- unhelpful aliases and no formatting:)
+--
+--   select * from orders t1, customers t2 where t1.customer_id=t2.customer_id and t1.total_amount>500
+--
+-- Hints on what to look for (there are at least five separate problems):
+--   1. SELECT * -- pulls every column from both tables, including ones
+--      nobody asked for, and will silently change shape if a column is
+--      ever added to either table.
+--   2. Comma-style join (implicit join) instead of an explicit INNER JOIN
+--      -- the join condition is buried in the WHERE clause instead of
+--      living next to the JOIN, which is exactly the "missing JOIN
+--      condition written where a human expects a filter" pattern the
+--      course warns about.
+--   3. Meaningless aliases (t1, t2) instead of short, intuitive ones
+--      (o, c).
+--   4. No formatting -- one unreadable line instead of one column/clause
+--      per line with keywords capitalized.
+--   5. No comment explaining WHY the total_amount > 500 threshold exists
+--      (is that a business rule? a data-quality filter? nobody can tell).
+--
+-- Write your refactored version below:
