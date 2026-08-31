@@ -1,0 +1,15 @@
+# Built database (regenerate with scripts/build_db.py -- don't commit the binary)
+db/*.db
+db/*.sqlite
+db/*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+*.swp
